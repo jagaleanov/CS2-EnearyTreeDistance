@@ -28,8 +28,8 @@
                             <button type="button" id="addRootA" class="btn btn-primary" data-toggle="modal"
                                 data-target="#formModal" data-parent="root" data-parent-value="root"
                                 data-tree="A">Ingresar raiz</button>
-                            <table id="ulTreeA" class="mt-5 pt-1">
-                            </table>
+                            <ul id="ulTreeA">
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,6 @@
                     <div class="card-body">
                         <h5 class="card-title">Árbol binario</h5>
                         <div class="tree tree-b">
-
                             <ul id="ulTreeB">
                             </ul>
                         </div>
@@ -47,8 +46,10 @@
         </div>
         <div class="card mx-4">
             <div class="card-body">
-                La hoja más <strong class="text-success">cercana</strong> a la raiz es <strong id="shortValue"></strong> con una distancia total de <span id="shortWeight"></span><br>
-                La hoja más <strong class="text-danger">lejana</strong> a la raiz es <strong id="longValue"></strong> con una distancia total de <span id="longWeight"></span>
+                La hoja más <strong class="text-success">cercana</strong> a la raiz es <strong id="shortValue"></strong>
+                con una distancia total de <span id="shortWeight"></span><br>
+                La hoja más <strong class="text-danger">lejana</strong> a la raiz es <strong id="longValue"></strong>
+                con una distancia total de <span id="longWeight"></span>
             </div>
         </div>
     </div>

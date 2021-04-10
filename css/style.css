@@ -1,62 +1,29 @@
 body {
     background: #888888;
 }
-.tree-a{
-    font-size: 1.3em;
-}
-
-.tree-a .verticalLine {
-    background: url('../img/pixel.gif') repeat-y top center;
-    /*background: #f00;*/
-}
-
-.tree-a .horizontalLine {
-    background: url('../img/pixel.gif') repeat-x center left;
-    /*background: #0f0;*/
-}
-
-.tree-a td {
-    text-align: center;
-    min-width: 20px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    cursor: pointer;
-    display: table-cell !important;
-}
-
-.tree-a .node {
-    font-weight: bold;
-    display: inline-block;
-    /*border: 1px solid #000;*/
-    color: #fff;
-}
 
 
 
-
-
-
-.tree-b {
+.tree {
     white-space: nowrap;
     /*font-weight: bold;*/
     font-size: 1.3em;
     overflow: hidden;
 }
 
-.tree-b ul, .tree-b li {
+.tree ul, .tree li {
     margin: 0 auto;
     padding: 0;
     white-space: nowrap;
     transition: all 0.5s;
 }
 
-.tree-b ul {
+.tree ul {
     padding-top: 20px;
     position: relative;
 }
 
-.tree-b li {
+.tree li {
     float: left;
     text-align: center;
     list-style-type: none;
@@ -66,7 +33,7 @@ body {
 
 /*Conectores horizontales*/
 
-.tree-b li::before, .tree-b li::after {
+.tree li::before, .tree li::after {
     content: '';
     position: absolute;
     top: 0;
@@ -79,37 +46,48 @@ body {
 
 /*Conectores verticales*/
 
-.tree-b li::after {
+.tree li::after {
     left: 50%;
     border-left: 1px solid #000;
 }
 
 /*Remueve conectores horizontales de elementos en los extremos*/
 
-.tree-b li:only-child::after, .tree-b li:only-child::before {
+.tree li:only-child::after {
     display: none;
+}
+
+.tree li:only-child::before {
+    display: none;
+}
+
+.tree li li:only-child::before {
+    display: block;
+    left: 1px ;
+    border-right: 1px solid #000;
+    border-radius: 0;
 }
 
 /*Remueve el conector izquierdo del primer hijo y eel derecho del ultimo hijo*/
 
-.tree-b li:first-child::before, .tree-b li:last-child::after {
+.tree li:first-child::before, .tree li:last-child::after {
     border: 0 none;
 }
 
 /*A�ade el conector vertical a los ultimos nodos*/
 
-.tree-b li:last-child::before {
+.tree li:last-child::before {
     border-right: 1px solid #000;
     border-radius: 0 5px 0 0;
 }
 
-.tree-b li:first-child::after {
+.tree li:first-child::after {
     border-radius: 5px 0 0 0;
 }
 
 /*Conector del padre*/
 
-.tree-b ul ul::before {
+.tree ul ul::before {
     content: '';
     position: absolute;
     top: 0;
@@ -121,9 +99,10 @@ body {
 
 /*Div del nodo*/
 
-.tree-b li div {
+.tree li div {
     display: inline-block !important;
     border: 1px solid #000;
     transition: all 0.5s;
     font-weight: bold;
+    cursor: pointer;
 }

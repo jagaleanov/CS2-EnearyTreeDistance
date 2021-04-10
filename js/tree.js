@@ -36,8 +36,6 @@ class Tree {
         this.lineCounter = 0;
         this.shortNode = null;
         this.longNode = null;
-        //this.treeToMatrix(this.head);
-        //this.completeMatrix();
     }
 
     //ADD NODE
@@ -148,7 +146,7 @@ class Tree {
     }
 
     //CREATE HTML BINARY
-    toHTML(head) {
+    toBinaryHTML(head) {
         var html = "";
 
         if (head === null) {
@@ -159,11 +157,11 @@ class Tree {
                 head.value +
                 '</div>';
 
-            if (!(head.down === null && head.right === null)) {
+            if (head.down != null || head.right != null) {
 
                 html += '<ul>' +
-                    this.toHTML(head.down) +
-                    this.toHTML(head.right) +
+                    this.toBinaryHTML(head.down) +
+                    this.toBinaryHTML(head.right) +
                     '</ul>' +
                     '</li>';
             }
@@ -174,127 +172,35 @@ class Tree {
         return html;
     }
 
-    //CREATE HTML ENEARY
-    setChar(node, charCounter, dir) {
-        let data = {};
-        data.value = null;
-        while (this.tableData[this.lineCounter].length - 1 < charCounter * 2) {
-            this.tableData[this.lineCounter].push(data);
-        }
+    //CREATE HTML BINARY
+    toEnearyHTML(head) {
+        var html = "";
 
-        if (dir == 1) {
-            let lineFrom = null;
-            for (let i = 1; i < this.lineCounter; i++) {
-                while (this.tableData[i].length - 1 < charCounter * 2) {
-                    this.tableData[i].push({ data });
-                }
-                if (this.tableData[i][charCounter * 2].value != null) {
-                    lineFrom = i;
-                }
+        if (head === null) {
+            return '<li><span class="px-2 py-1">*</span></li>';
+        } else {
+            html = '<li>' +
+                '<div class="node badge badge-pill badge-' + (head.id == this.shortNode[0].id ? 'success' : head.id == this.longNode[0].id ? 'danger' : 'primary') + '" data-toggle="modal" data-target="#formModal" data-parent="' + head.id + '" data-parent-value="' + head.value + '">' +
+                '<small>' + head.weight + '</small><br>' +
+                head.value +
+                '</div>';
+
+            if (head.down != null) {
+
+                html += '<ul>';
+                let node = head.down;
+                do{
+
+
+                    html += this.toEnearyHTML(node);
+
+                    node = node.right;
+                }while (node != null) ;
+                html += '</ul>' +
+                    '</li>';
             }
 
-            for (let i = lineFrom + 1; i < this.lineCounter; i++) {
-                data = {};
-                data.value = '--';
-                this.tableData[i][charCounter * 2] = data;
-            }
-
-        } else if (dir == 0) {
-
-            let data = {};
-            data.value = '||';
-            this.tableData[this.lineCounter][(charCounter * 2) - 1] = data;
-        }
-
-        data = {};
-        data.value = node.value;
-        data.id = node.id;
-        data.parent = node.parent;
-        data.weight = node.weight;
-
-
-        this.tableData[this.lineCounter][charCounter * 2] = data;
-    }
-
-    addLine() {
-        this.tableData.push([]);
-        this.tableData.push([]);
-
-        this.lineCounter++;
-        this.lineCounter++;
-    }
-
-    treeToMatrix(head, charCounter = 0, dir = null) {
-
-        if (head.value == null) {
-            this.tableData.push([]);
-        }
-        //
-        this.setChar(head, charCounter, dir);
-
-        if (head.down != null) {
-            this.treeToMatrix(head.down, charCounter + 1, 0);
-        }
-
-        if (head.right != null) {
-            this.addLine();
-            this.treeToMatrix(head.right, charCounter, 1);
-        }
-
-    }
-
-    completeMatrix() {
-        let counter = 0;
-
-        for (let i = 0; i < this.tableData.length; i++) {
-            if (this.tableData[i].length > counter) {
-                counter = this.tableData[i].length;
-            }
-        }
-
-        for (let i = 0; i < this.tableData.length; i++) {
-            while (this.tableData[i].length < counter) {
-                let data = {};
-                data.value = null;
-                this.tableData[i].push(data);
-            }
-        }
-
-
-    }
-
-    setMatrixHTML() {
-
-        this.tableData = [[]];
-        this.lineCounter = 0;
-        this.shortNode = this.shortRoute(this.head);
-        this.longNode = this.longRoute(this.head);
-        this.treeToMatrix(this.head);
-        this.completeMatrix();
-    }
-
-    getMatrixHTML() {
-        this.setMatrixHTML();
-        let html = '';
-        for (let i = 0; i < this.tableData[0].length; i++) {
-            html += '<tr>';
-            for (let j = 0; j < this.tableData.length; j++) {
-
-                if (this.tableData[j][i].value == '||') {
-                    html += '<td class="verticalLine">&nbsp;</td>';
-                } else if (this.tableData[j][i].value == '--') {
-                    html += '<td class="horizontalLine">&nbsp;</td>';
-                } else if (this.tableData[j][i].value != null) {
-                    html += '<td><div class="node badge badge-pill badge-' + (this.tableData[j][i].id == this.shortNode[0].id ? 'success' : this.tableData[j][i].id == this.longNode[0].id ? 'danger' : 'primary') + '" data-toggle="modal" data-target="#formModal" data-parent="' + this.tableData[j][i].id + '" data-parent-value="' + this.tableData[j][i].value + '">' +
-                        '<small>' + this.tableData[j][i].weight + '</small><br>' +
-                        this.tableData[j][i].value +
-                        '</div></td>';
-                } else {
-                    html += '<td class="empty">&nbsp;</td>';
-                }
-
-            }
-            html += '</tr>';
+            html += '</li>';
         }
 
         return html;
@@ -308,8 +214,10 @@ function addNode() {
 
 
     if ($('#valueTxt').val().length > 0 && ($('#weightTxt').val() || tree.head === null)) {
-        tree.addNode($('#parentTxt').val(), $('#valueTxt').val(), $('#weightTxt').val())
+        tree.addNode($('#parentTxt').val(), $('#valueTxt').val(), $('#weightTxt').val());
+
         $('#formModal').modal('hide');
+
         printTrees();
     } else {
         alert('Ingrese valor y costo');
@@ -318,14 +226,14 @@ function addNode() {
 }
 
 function printTrees() {
+    tree.shortNode = tree.shortRoute(tree.head);
+    tree.longNode = tree.longRoute(tree.head);
     if (tree.head === null) {//si aun no hay raiz
         $('#addRootA').show();//mostrar boton de insertar raiz
-        //$('#ulTreeA').html("Árbol vacío");
-        //$('#ulTreeB').html("Árbol vacío");
     } else {
         $('#addRootA').hide();//ocultar boton de insertar raiz
-        $('#ulTreeA').html(tree.getMatrixHTML());
-        $('#ulTreeB').html(tree.toHTML(tree.head));//imprimir arbol
+        $('#ulTreeA').html(tree.toEnearyHTML(tree.head));
+        $('#ulTreeB').html(tree.toBinaryHTML(tree.head));//imprimir arbol
 
         let shortRoute = tree.shortRoute(tree.head);
         console.log(shortRoute);
