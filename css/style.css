@@ -1,0 +1,129 @@
+body {
+    background: #888888;
+}
+.tree-a{
+    font-size: 1.3em;
+}
+
+.tree-a .verticalLine {
+    background: url('../img/pixel.gif') repeat-y top center;
+    /*background: #f00;*/
+}
+
+.tree-a .horizontalLine {
+    background: url('../img/pixel.gif') repeat-x center left;
+    /*background: #0f0;*/
+}
+
+.tree-a td {
+    text-align: center;
+    min-width: 20px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+    display: table-cell !important;
+}
+
+.tree-a .node {
+    font-weight: bold;
+    display: inline-block;
+    /*border: 1px solid #000;*/
+    color: #fff;
+}
+
+
+
+
+
+
+.tree-b {
+    white-space: nowrap;
+    /*font-weight: bold;*/
+    font-size: 1.3em;
+    overflow: hidden;
+}
+
+.tree-b ul, .tree-b li {
+    margin: 0 auto;
+    padding: 0;
+    white-space: nowrap;
+    transition: all 0.5s;
+}
+
+.tree-b ul {
+    padding-top: 20px;
+    position: relative;
+}
+
+.tree-b li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 1px 0 1px;
+}
+
+/*Conectores horizontales*/
+
+.tree-b li::before, .tree-b li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 1px solid #000;
+    /**/
+    width: 50%;
+    height: 20px;
+}
+
+/*Conectores verticales*/
+
+.tree-b li::after {
+    left: 50%;
+    border-left: 1px solid #000;
+}
+
+/*Remueve conectores horizontales de elementos en los extremos*/
+
+.tree-b li:only-child::after, .tree-b li:only-child::before {
+    display: none;
+}
+
+/*Remueve el conector izquierdo del primer hijo y eel derecho del ultimo hijo*/
+
+.tree-b li:first-child::before, .tree-b li:last-child::after {
+    border: 0 none;
+}
+
+/*A�ade el conector vertical a los ultimos nodos*/
+
+.tree-b li:last-child::before {
+    border-right: 1px solid #000;
+    border-radius: 0 5px 0 0;
+}
+
+.tree-b li:first-child::after {
+    border-radius: 5px 0 0 0;
+}
+
+/*Conector del padre*/
+
+.tree-b ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 1px solid #000;
+    width: 0;
+    height: 20px;
+}
+
+/*Div del nodo*/
+
+.tree-b li div {
+    display: inline-block !important;
+    border: 1px solid #000;
+    transition: all 0.5s;
+    font-weight: bold;
+}
