@@ -222,6 +222,6 @@ $('#formModal').on('show.bs.modal', function (event) {//listener botones
     if (parentValue == 'root') {
         modal.find('#weightTxt').val("0");
     }
-    modal.find('.modal-title').text('Nuevo nodo en ' + parentValue + ' en el árbol.');
+    modal.find('.modal-title').text('Nuevo nodo hijo de ' + parentValue + '.');
     modal.find('#parentTxt').val(parent);//llenar el campo parent oculto en el form 
 });
