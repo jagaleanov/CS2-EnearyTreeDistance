@@ -90,6 +90,14 @@ class Tree {
         }
     }
 
+    updateNode(id, weight) {
+        
+        console.log(id);
+        console.log(weight);
+        let node = this.findId(this.head, id);
+        node.weight = weight;
+    }
+
     //ROUTES
     shortRoute(head) {
         if (head.down == null) {
@@ -189,6 +197,18 @@ function addNode() {
     }
 }
 
+function updateNode() {
+    
+    if ($('#weightTxtUpdate').val().length > 0 ) {
+        tree.updateNode($('#parentTxtUpdate').val(), $('#weightTxtUpdate').val());
+        $('#formModal').modal('hide');
+        printTrees();
+    } else {
+        alert('Ingrese valor y costo');
+    }
+    
+}
+
 function printTrees() {
     tree.shortNode = tree.shortRoute(tree.head);
     tree.longNode = tree.longRoute(tree.head);
@@ -199,11 +219,9 @@ function printTrees() {
         $('#ulTreeA').html(tree.toEnearyHTML(tree.head));
         $('#ulTreeB').html(tree.toBinaryHTML(tree.head));//imprimir arbol
         let shortRoute = tree.shortRoute(tree.head);
-        console.log(shortRoute);
         $('#shortValue').html(shortRoute[0].value);
         $('#shortWeight').html(shortRoute[1]);
         let longRoute = tree.longRoute(tree.head);
-        console.log(shortRoute);
         $('#longValue').html(longRoute[0].value);
         $('#longWeight').html(longRoute[1]);
     }
@@ -219,9 +237,12 @@ $('#formModal').on('show.bs.modal', function (event) {//listener botones
     var modal = $(this);
     modal.find('#valueTxt').val("");
     modal.find('#weightTxt').val("");
+    modal.find('#weightTxtUpdate').val("");
     if (parentValue == 'root') {
         modal.find('#weightTxt').val("0");
     }
-    modal.find('.modal-title').text('Nuevo nodo hijo de ' + parentValue );
+    modal.find('#formModalLabel').text('Nuevo nodo hijo de ' + parentValue);
+    modal.find('#formModalLabelUpdate').text('Actualizar nodo ' + parentValue);
     modal.find('#parentTxt').val(parent);//llenar el campo parent oculto en el form 
+    modal.find('#parentTxtUpdate').val(parent);//llenar el campo parent oculto en el form 
 });
